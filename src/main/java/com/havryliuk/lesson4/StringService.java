@@ -30,8 +30,30 @@ public class StringService {
     }
 
 
+    /**Task 3*/
+    public static boolean containsSubString(String string, String subString) {
+        checkForNull(string);
+        checkForNull(subString);
+        return string.contains(subString);
+    }
 
 
+    /**Task 4*/
+    public static boolean containsSubStringIgnoreCase(String string, String subString) {
+        checkForNull(string);
+        checkForNull(subString);
+        return string
+                .toLowerCase()
+                .contains(subString.toLowerCase());
+    }
+
+
+    /**Task 5*/
+    public static boolean matchStartsOfString(String string, String startOfString) {
+        checkForNull(string);
+        checkForNull(startOfString);
+        return string.startsWith(startOfString);
+    }
 
 
 
