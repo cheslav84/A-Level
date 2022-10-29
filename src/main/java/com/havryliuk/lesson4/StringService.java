@@ -1,13 +1,7 @@
 package com.havryliuk.lesson4;
 
-public class FirstAndLastFromString {
-    public static void main(String[] args) {
-        String someString = "Hello World!";
-
-        printFirstAndLastSymbol(someString);
-    }
-
-    private static void printFirstAndLastSymbol(String someString) {
+public class StringService {
+    public static void printFirstAndLastSymbol(String someString) {
         System.out.printf("First letter of string \"%s\" is \"%s\", " +
                 "and last letter is \"%s\".", someString, getFirstLetter(someString), getLastLetter(someString));
     }
