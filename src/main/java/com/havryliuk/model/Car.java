@@ -1,5 +1,7 @@
 package com.havryliuk.model;
 
+import java.util.Random;
+
 public class Car {
     private String manufacturer;
     private String engine;
@@ -14,6 +16,8 @@ public class Car {
         this.manufacturer = manufacturer;
         this.engine = engine;
         this.color = color;
+        this.count = 1;
+        this.price = new Random().nextInt(20_000, 100_000);
     }
 
     public String getManufacturer() {
