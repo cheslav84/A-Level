@@ -5,12 +5,14 @@ import com.havryliuk.service.CarService;
 
 public class Main {
     public static void main(String[] args) {
-        Car firstCar = CarService.create();
-        Car secondCar = CarService.create();
-        Car thirdCar = CarService.create();
+        CarService service = new CarService();
 
-        CarService.print(firstCar);
-        CarService.print(secondCar);
-        CarService.print(thirdCar);
+        Car firstCar = service.create();
+        Car secondCar = service.create();
+        Car thirdCar = service.create();
+
+        service.print(firstCar);
+        service.print(secondCar);
+        service.print(thirdCar);
     }
 }
