@@ -1,19 +1,45 @@
 package com.havryliuk.model;
 
-import java.util.Random;
+public class Engine {
 
-public enum Engine {
-    DIESEL(1),
-    GAS(2),
-    PETROL(3);
+    private int power;
+    private String type;
 
-    int engineCode;
-
-    Engine(final int engineCode) {
-        this.engineCode = engineCode;
+    public Engine() {
     }
 
-    public static Engine getRandomEngine() {
-        return Engine.values()[new Random().nextInt(0, 3)];
+    public Engine(int power, String type) {
+        checkPower(power);
+        this.power = power;
+        this.type = type;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        checkPower(power);
+        this.power = power;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    private void checkPower (int power) {
+        if (power < 0 || power > 1001) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Engine: " + type +
+                ", " + power + " hp";
     }
 }

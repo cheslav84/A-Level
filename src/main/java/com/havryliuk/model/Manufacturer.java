@@ -1,7 +1,5 @@
 package com.havryliuk.model;
 
-import java.util.Random;
-
 public enum Manufacturer {
     AUDI,
     BMW,
@@ -9,4 +7,8 @@ public enum Manufacturer {
     FORD,
     HONDA,
     JAGUAR;
+    @Override
+    public String toString() {
+        return "Manufacturer: " + this.name();
+    }
 }
