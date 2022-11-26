@@ -1,11 +1,13 @@
 package com.havryliuk;
 
 import com.havryliuk.model.Car;
+import com.havryliuk.repository.CarArrayRepository;
 import com.havryliuk.service.CarService;
 
 public class Main {
     public static void main(String[] args) {
-        CarService service = new CarService();
+        CarArrayRepository repository = new CarArrayRepository();
+        CarService service = new CarService(repository);
 
         Car firstCar = service.create();
         Car secondCar = service.create();
