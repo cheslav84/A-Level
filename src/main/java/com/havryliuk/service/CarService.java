@@ -1,9 +1,6 @@
 package com.havryliuk.service;
 
-import com.havryliuk.model.Car;
-import com.havryliuk.model.Color;
-import com.havryliuk.model.Engine;
-import com.havryliuk.model.Manufacturer;
+import com.havryliuk.model.*;
 import com.havryliuk.repository.CarArrayRepository;
 import com.havryliuk.util.RandomGenerator;
 
@@ -20,11 +17,16 @@ public class CarService {
         this.carArrayRepository = carArrayRepository;
     }
 
-    public Car create() {
+    public Car create(CarType carType) {
         Manufacturer manufacturer = getRandomManufacturer();
         Engine engine = getRandomEngine();
         Color color = getRandomColor();
-        return new Car(manufacturer, engine, color);
+        if (carType.equals(CarType.CAR)){
+            return new  PassengerCar(manufacturer, engine, color, carType);
+        } else if (carType.equals(CarType.TRUCK)) {
+            return new Truck(manufacturer, engine, color, carType);
+        }
+        return null;
     }
 
     public int create(RandomGenerator randomGenerator){
@@ -33,23 +35,19 @@ public class CarService {
             return -1;
         }
         for (int i = 0; i <= numberOfCars; i++) {
-            Car currentCar = create();
+            Car currentCar = create(getRandomCarType());
             currentCar.setCount(numberOfCars);
             print(currentCar);
         }
-//        if (numberOfCars == 0){
-//            numberOfCars--;
-//        }
         return numberOfCars;
     }
 
 
 
     public void print(Car car) {
-        System.out.println(car.getManufacturer()
-                + "; " + car.getEngine()
-                + "; " + car.getColor());
+        System.out.println(car);
     }
+
 
     private Engine getRandomEngine() {
         String [] engineTypes = {"Diesel", "Gas", "Petrol"};
@@ -68,6 +66,12 @@ public class CarService {
         final Manufacturer[] values = Manufacturer.values();
         return values[new Random().nextInt(values.length)];
     }
+
+    private CarType getRandomCarType() {
+        final CarType[] values = CarType.values();
+        return values[new Random().nextInt(values.length)];
+    }
+
 
 
     public void printAll() {

@@ -1,22 +1,27 @@
 package com.havryliuk.model;
 
+import com.havryliuk.service.CountRestore;
+
 import java.util.Random;
 import java.util.UUID;
-public class Car {
+public abstract class Car implements CountRestore {
     private final String id;
     private Manufacturer manufacturer;
     private Engine engine;
     private Color color;
+
+    private CarType carType;
     private int count;
     private int price;
 
-    public Car(Manufacturer manufacturer, Engine engine, Color color) {
+    protected Car(Manufacturer manufacturer, Engine engine, Color color, CarType carType) {
         this.manufacturer = manufacturer;
         this.engine = engine;
         this.color = color;
         this.count = 1;
         this.price = new Random().nextInt(20_000, 100_000);
         this.id = UUID.randomUUID().toString();
+        this.carType = carType;
     }
 
     public Manufacturer getManufacturer() {
@@ -63,6 +68,15 @@ public class Car {
         this.price = price;
     }
 
+    public CarType getCarType() {
+        return carType;
+    }
+
+    public void setCarType(CarType carType) {
+        this.carType = carType;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,10 +84,11 @@ public class Car {
 
         Car car = (Car) o;
 
-        if (count != car.count) return false;
+        if (price != car.price) return false;
         if (manufacturer != car.manufacturer) return false;
         if (engine != null ? !engine.equals(car.engine) : car.engine != null) return false;
-        return color == car.color;
+        if (color != car.color) return false;
+        return carType == car.carType;
     }
 
     @Override
@@ -81,7 +96,16 @@ public class Car {
         int result = manufacturer != null ? manufacturer.hashCode() : 0;
         result = 31 * result + (engine != null ? engine.hashCode() : 0);
         result = 31 * result + (color != null ? color.hashCode() : 0);
-        result = 31 * result + count;
+        result = 31 * result + (carType != null ? carType.hashCode() : 0);
+        result = 31 * result + price;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return getManufacturer()
+                + "; " + getEngine()
+                + "; " + getColor()
+                + "; Count: " + count;
     }
 }
