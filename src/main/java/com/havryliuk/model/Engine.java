@@ -42,4 +42,22 @@ public class Engine {
         return "Engine: " + type +
                 ", " + power + " hp";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Engine engine = (Engine) o;
+
+        if (power != engine.power) return false;
+        return type != null ? type.equals(engine.type) : engine.type == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = power;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
 }

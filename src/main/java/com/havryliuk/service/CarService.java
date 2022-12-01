@@ -4,16 +4,43 @@ import com.havryliuk.model.Car;
 import com.havryliuk.model.Color;
 import com.havryliuk.model.Engine;
 import com.havryliuk.model.Manufacturer;
+import com.havryliuk.repository.CarArrayRepository;
+import com.havryliuk.util.RandomGenerator;
 
+import java.util.Arrays;
 import java.util.Random;
 
 
 public class CarService {
+
+    private final CarArrayRepository carArrayRepository;
+
+
+    public CarService(final CarArrayRepository carArrayRepository) {
+        this.carArrayRepository = carArrayRepository;
+    }
+
     public Car create() {
         Manufacturer manufacturer = getRandomManufacturer();
         Engine engine = getRandomEngine();
         Color color = getRandomColor();
         return new Car(manufacturer, engine, color);
+    }
+
+    public int create(RandomGenerator randomGenerator){
+        int numberOfCars = randomGenerator.generateNumber();
+        if (numberOfCars == 0){
+            return -1;
+        }
+        for (int i = 0; i <= numberOfCars; i++) {
+            Car currentCar = create();
+            currentCar.setCount(numberOfCars);
+            print(currentCar);
+        }
+//        if (numberOfCars == 0){
+//            numberOfCars--;
+//        }
+        return numberOfCars;
     }
 
 
@@ -42,6 +69,42 @@ public class CarService {
         return values[new Random().nextInt(values.length)];
     }
 
+
+    public void printAll() {
+        final Car[] all = carArrayRepository.getAll();
+        System.out.println(Arrays.toString(all));
+    }
+
+    public Car[] getAll() {
+        return carArrayRepository.getAll();
+    }
+
+    public Car find(final String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+        return carArrayRepository.getById(id);
+    }
+
+    public void changeRandomColor(final String id) {
+        if (id == null || id.isEmpty()) {
+            return;
+        }
+        final Car car = find(id);
+        if (car == null) {
+            return;
+        }
+        findAndChangeRandomColor(car);
+    }
+
+    private void findAndChangeRandomColor(final Car car) {
+        final Color color = car.getColor();
+        Color randomColor;
+        do {
+            randomColor = getRandomColor();
+        } while (randomColor == color);
+        carArrayRepository.updateColor(car.getId(), randomColor);
+    }
 
     public static void check(Car car) {
         boolean rightCount = checkCount(car);
