@@ -1,20 +1,19 @@
 package com.havryliuk.model;
 
 public class Truck extends Car {
-    private int passengerCount;
-
+    private int loadCapacity;
 
     public Truck(Manufacturer manufacturer, Engine engine, Color color, CarType carType) {
         super(manufacturer, engine, color, carType);
         setCarType(CarType.TRUCK);
     }
 
-    public int getPassengerCount() {
-        return passengerCount;
+    public int getLoadCapacity() {
+        return loadCapacity;
     }
 
-    public void setPassengerCount(int passengerCount) {
-        this.passengerCount = passengerCount;
+    public void setLoadCapacity(int loadCapacity) {
+        this.loadCapacity = loadCapacity;
     }
 
     @Override
@@ -22,21 +21,22 @@ public class Truck extends Car {
         setCount(count);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Truck truck = (Truck) o;
+        Truck that = (Truck) o;
 
-        return passengerCount == truck.passengerCount;
+        return loadCapacity == that.loadCapacity;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + passengerCount;
+        result = 31 * result + loadCapacity;
         return result;
     }
 
@@ -44,4 +44,5 @@ public class Truck extends Car {
     public String toString() {
         return getCarType() + ": " +  super.toString();
     }
+
 }
