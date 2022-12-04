@@ -1,6 +1,7 @@
 package com.havryliuk;
 
 import com.havryliuk.model.Car;
+import com.havryliuk.model.CarType;
 import com.havryliuk.repository.CarArrayRepository;
 import com.havryliuk.service.CarService;
 
@@ -9,19 +10,13 @@ public class Main {
         CarArrayRepository repository = new CarArrayRepository();
         CarService service = new CarService(repository);
 
-        Car firstCar = service.create();
-        Car secondCar = service.create();
-        Car thirdCar = service.create();
-        thirdCar.setCount(0);
+        Car passengerCar = service.create(CarType.CAR);
+        passengerCar.restoreCount(100);
+        service.print(passengerCar);
 
-        service.print(firstCar);
-        CarService.check(firstCar);
-        System.out.println();
-        service.print(secondCar);
-        CarService.check(secondCar);
-        System.out.println();
-        service.print(thirdCar);
-        CarService.check(thirdCar);
+        Car truck = service.create(CarType.TRUCK);
+        truck.restoreCount(50);
+        service.print(truck);
 
     }
 }

@@ -1,9 +1,6 @@
 package com.havryliuk.service;
 
-import com.havryliuk.model.Car;
-import com.havryliuk.model.Color;
-import com.havryliuk.model.Engine;
-import com.havryliuk.model.Manufacturer;
+import com.havryliuk.model.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -71,7 +68,7 @@ class CarServiceTest {
 
     @Test
     void createCarNotNullParameters(){
-        Car car = carService.create();
+        Car car = carService.create(CarType.TRUCK);
         assertNotNull(car.getColor());
         assertNotNull(car.getManufacturer());
         assertNotNull(car.getEngine());
@@ -80,7 +77,7 @@ class CarServiceTest {
 
     @Test
     void findCarByIdPositive() {
-        Car car = carService.create();
+        Car car = carService.create(CarType.CAR);
         car.setManufacturer(Manufacturer.HONDA);
         car.setEngine(new Engine(140,"Diesel" ));
         car.setColor(Color.RED);
