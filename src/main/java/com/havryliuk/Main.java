@@ -27,6 +27,18 @@ public class Main {
         service.printManufacturerAndCount(truck);
         System.out.println("______\n");
 
+        System.out.println("TASK 2");
+        //printing defined car color
+        truck = service.create(CarType.TRUCK);
+        setDefinedTruckParameters((Truck) truck);
+        service.printColor(truck);
+        System.out.println("______");
+
+        //printing random car color
+        truck = null;
+        service.printColor(truck);
+        System.out.println("______\n");
+
 
     }
 

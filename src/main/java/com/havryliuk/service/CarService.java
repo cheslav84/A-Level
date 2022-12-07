@@ -29,6 +29,14 @@ public class CarService {
 
 
 
+    public void printColor(Car car){
+        Color color = Optional.ofNullable(car)
+                   .orElse(create(CarType.TRUCK))
+                .getColor();
+        System.out.println(color);
+    }
+
+
     public Car create(CarType carType) {
         Manufacturer manufacturer = getRandomManufacturer();
         Engine engine = getRandomEngine();
@@ -58,41 +66,13 @@ public class CarService {
         return numberOfCars;
     }
 
-
     public boolean areCarsEqual(Car firstCar, Car secondCar){
         return (firstCar.hashCode() != secondCar.hashCode()) ? false : firstCar.equals(secondCar);
     }
 
-
     public void print(Car car) {
         System.out.println(car);
     }
-
-
-    private Engine getRandomEngine() {
-        String [] engineTypes = {"Diesel", "Gas", "Petrol"};
-        Engine engine = new Engine();
-        engine.setType(engineTypes[new Random().nextInt(engineTypes.length)]);
-        engine.setPower(new Random().nextInt(1000));
-        return engine;
-    }
-
-    private Color getRandomColor() {
-        final Color[] values = Color.values();
-        return values[new Random().nextInt(values.length)];
-    }
-
-    private Manufacturer getRandomManufacturer() {
-        final Manufacturer[] values = Manufacturer.values();
-        return values[new Random().nextInt(values.length)];
-    }
-
-    private CarType getRandomCarType() {
-        final CarType[] values = CarType.values();
-        return values[new Random().nextInt(values.length)];
-    }
-
-
 
     public void printAll() {
         final Car[] all = carArrayRepository.getAll();
@@ -121,15 +101,6 @@ public class CarService {
         findAndChangeRandomColor(car);
     }
 
-    private void findAndChangeRandomColor(final Car car) {
-        final Color color = car.getColor();
-        Color randomColor;
-        do {
-            randomColor = getRandomColor();
-        } while (randomColor == color);
-        carArrayRepository.updateColor(car.getId(), randomColor);
-    }
-
     public static void check(Car car) {
         boolean rightCount = checkCount(car);
         boolean rightPower = checkPower(car);
@@ -153,4 +124,37 @@ public class CarService {
     private static boolean checkPower(Car car) {
         return car.getEngine().getPower() > 200;
     }
+
+    private Engine getRandomEngine() {
+        String [] engineTypes = {"Diesel", "Gas", "Petrol"};
+        Engine engine = new Engine();
+        engine.setType(engineTypes[new Random().nextInt(engineTypes.length)]);
+        engine.setPower(new Random().nextInt(1000));
+        return engine;
+    }
+
+    private Color getRandomColor() {
+        final Color[] values = Color.values();
+        return values[new Random().nextInt(values.length)];
+    }
+
+    private Manufacturer getRandomManufacturer() {
+        final Manufacturer[] values = Manufacturer.values();
+        return values[new Random().nextInt(values.length)];
+    }
+
+    private CarType getRandomCarType() {
+        final CarType[] values = CarType.values();
+        return values[new Random().nextInt(values.length)];
+    }
+
+    private void findAndChangeRandomColor(final Car car) {
+        final Color color = car.getColor();
+        Color randomColor;
+        do {
+            randomColor = getRandomColor();
+        } while (randomColor == color);
+        carArrayRepository.updateColor(car.getId(), randomColor);
+    }
+
 }
