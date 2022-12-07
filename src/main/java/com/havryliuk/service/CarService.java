@@ -30,7 +30,7 @@ public class CarService {
 
     public void printColor(Car car){
         Color color = Optional.ofNullable(car)
-                   .orElse(create(CarType.TRUCK))
+                .orElse(create(CarType.TRUCK))
                 .getColor();
         System.out.println(color);
     }
@@ -42,7 +42,31 @@ public class CarService {
         printManufacturerAndCount(checkedCar);
     }
 
+    public void printEngineInfo(Car car) {
+        car = Optional.ofNullable(car)
+                .orElseGet(this::createTruckAndInform);
+        Optional.ofNullable(car)
+                .map(Car::getEngine)
+                .ifPresent(System.out::println);
+    }
 
+    public void printInfo(Car car) {
+        Optional.ofNullable(car)
+                .ifPresentOrElse(
+                        car1 -> System.out.println(car1),
+                        () -> System.out.println(create(CarType.TRUCK))
+                );
+    }
+
+
+
+
+
+    private Car createTruckAndInform(){
+        Car car = create(CarType.TRUCK);
+        System.out.println("New truck have been created.");
+        return car;
+    }
 
 
 
@@ -78,7 +102,7 @@ public class CarService {
     }
 
     public boolean areCarsEqual(Car firstCar, Car secondCar){
-        return (firstCar.hashCode() != secondCar.hashCode()) ? false : firstCar.equals(secondCar);
+        return firstCar.hashCode() == secondCar.hashCode() && firstCar.equals(secondCar);
     }
 
     public void print(Car car) {
