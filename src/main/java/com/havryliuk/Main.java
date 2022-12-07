@@ -12,6 +12,7 @@ public class Main {
         Car truck = service.create(CarType.TRUCK);
         setDefinedTruckParameters((Truck) truck);
 
+
         System.out.println("TASK 1");
         //printing Manufacturer and Count of Car
         service.printManufacturerAndCount(truck);
@@ -22,10 +23,9 @@ public class Main {
         service.printManufacturerAndCount(truck);
         System.out.println("______");
 
-        //setting Cat to null.
-        truck = null;
-        service.printManufacturerAndCount(truck);
+        service.printManufacturerAndCount(null);
         System.out.println("______\n");
+
 
         System.out.println("TASK 2");
         //printing defined car color
@@ -35,9 +35,9 @@ public class Main {
         System.out.println("______");
 
         //printing random car color
-        truck = null;
-        service.printColor(truck);
+        service.printColor(null);
         System.out.println("______\n");
+
 
         System.out.println("TASK 3");
         //printing Manufacturer and Count of Car
@@ -50,11 +50,20 @@ public class Main {
         //setting count less than 10
         truck.setCount(10);
         //service.checkCount(truck);//todo uncomment (Exception expected)
-        System.out.println("______");
+        System.out.println("______\n");
 
+        System.out.println("TASK 5");
+        //printing Engine
+        service.printEngineInfo(truck);
+        //new Engine will be created
+        service.printEngineInfo(null);
+        System.out.println("______\n");
 
-
-
+        System.out.println("TASK 4");
+        //printing Car
+        service.printInfo(truck);
+        //new Car will be created
+        service.printInfo(null);
     }
 
 
