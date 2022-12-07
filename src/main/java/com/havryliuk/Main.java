@@ -39,6 +39,21 @@ public class Main {
         service.printColor(truck);
         System.out.println("______\n");
 
+        System.out.println("TASK 3");
+        //printing Manufacturer and Count of Car
+        truck = service.create(CarType.TRUCK);
+        setDefinedTruckParameters((Truck) truck);
+        truck.setCount(11);
+        service.checkCount(truck);
+        System.out.println("______");
+
+        //setting count less than 10
+        truck.setCount(10);
+        //service.checkCount(truck);//todo uncomment (Exception expected)
+        System.out.println("______");
+
+
+
 
     }
 

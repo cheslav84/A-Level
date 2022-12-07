@@ -1,5 +1,6 @@
 package com.havryliuk.service;
 
+import com.havryliuk.exceptions.UserInputException;
 import com.havryliuk.model.*;
 import com.havryliuk.repository.CarArrayRepository;
 import com.havryliuk.util.RandomGenerator;
@@ -27,14 +28,24 @@ public class CarService {
                 .ifPresent(count -> System.out.println("Count: " + count));
     }
 
-
-
     public void printColor(Car car){
         Color color = Optional.ofNullable(car)
                    .orElse(create(CarType.TRUCK))
                 .getColor();
         System.out.println(color);
     }
+
+    public void checkCount(Car car) {
+        Car checkedCar = Optional.ofNullable(car)
+                .filter(thisCar -> thisCar.getCount() > 10)
+                .orElseThrow(UserInputException::new);
+        printManufacturerAndCount(checkedCar);
+    }
+
+
+
+
+
 
 
     public Car create(CarType carType) {
@@ -101,25 +112,25 @@ public class CarService {
         findAndChangeRandomColor(car);
     }
 
-    public static void check(Car car) {
-        boolean rightCount = checkCount(car);
-        boolean rightPower = checkPower(car);
-        if (rightCount && rightPower) {
-            System.out.println("The car is ready to be sold.");
-        } else {
-            if (rightCount && !rightPower) {
-                System.out.println("The car has not enough power.");
-            } else if (!rightCount && rightPower) {
-                System.out.println("The car is absent at the moment.");
-            } else {
-                System.out.println("The car has not enough power and the car is absent at the moment.");
-            }
-        }
-    }
+//    public static void check(Car car) {
+//        boolean rightCount = checkCount(car);
+//        boolean rightPower = checkPower(car);
+//        if (rightCount && rightPower) {
+//            System.out.println("The car is ready to be sold.");
+//        } else {
+//            if (rightCount && !rightPower) {
+//                System.out.println("The car has not enough power.");
+//            } else if (!rightCount && rightPower) {
+//                System.out.println("The car is absent at the moment.");
+//            } else {
+//                System.out.println("The car has not enough power and the car is absent at the moment.");
+//            }
+//        }
+//    }
 
-    private static boolean checkCount(Car car) {
-        return car.getCount() > 0;
-    }
+//    private static boolean checkCount(Car car) {
+//        return car.getCount() > 0;
+//    }
 
     private static boolean checkPower(Car car) {
         return car.getEngine().getPower() > 200;
