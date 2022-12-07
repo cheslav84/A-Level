@@ -5,6 +5,7 @@ import com.havryliuk.repository.CarArrayRepository;
 import com.havryliuk.util.RandomGenerator;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -17,14 +18,29 @@ public class CarService {
         this.carArrayRepository = carArrayRepository;
     }
 
+
+    public void printManufacturerAndCount(Car car) {
+        Optional<Car> carOptional = Optional.ofNullable(car);
+        carOptional.map(Car::getManufacturer)
+                .ifPresent(System.out::println);
+        carOptional.map(Car::getCount)
+                .ifPresent(count -> System.out.println("Count: " + count));
+    }
+
+
+
     public Car create(CarType carType) {
         Manufacturer manufacturer = getRandomManufacturer();
         Engine engine = getRandomEngine();
         Color color = getRandomColor();
         if (carType.equals(CarType.TRUCK)){
-            return new Truck(manufacturer, engine, color, carType);
+            Car truck = new Truck(manufacturer, engine, color, carType);
+            carArrayRepository.save(truck);
+            return  truck;
         } else if (carType.equals(CarType.CAR)) {
-            return new PassengerCar(manufacturer, engine, color, carType);
+            Car passengerCar = new PassengerCar(manufacturer, engine, color, carType);
+            carArrayRepository.save(passengerCar);
+            return passengerCar;
         }
         return null;
     }
