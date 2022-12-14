@@ -21,10 +21,10 @@ public class CarService {
         Manufacturer manufacturer = getRandomManufacturer();
         Engine engine = getRandomEngine();
         Color color = getRandomColor();
-        if (carType.equals(CarType.CAR)){
-            return new  PassengerCar(manufacturer, engine, color, carType);
-        } else if (carType.equals(CarType.TRUCK)) {
+        if (carType.equals(CarType.TRUCK)){
             return new Truck(manufacturer, engine, color, carType);
+        } else if (carType.equals(CarType.CAR)) {
+            return new PassengerCar(manufacturer, engine, color, carType);
         }
         return null;
     }
@@ -42,6 +42,10 @@ public class CarService {
         return numberOfCars;
     }
 
+
+    public boolean areCarsEqual(Car firstCar, Car secondCar){
+        return (firstCar.hashCode() != secondCar.hashCode()) ? false : firstCar.equals(secondCar);
+    }
 
 
     public void print(Car car) {
