@@ -45,4 +45,8 @@ public class PassengerCar extends Car {
         return getCarType() + ": " +  super.toString();
     }
 
+    @Override
+    public int compareTo(Car o) {
+        return super.getId().compareTo(o.getId());
+    }
 }

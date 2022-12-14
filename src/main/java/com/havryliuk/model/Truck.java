@@ -44,4 +44,9 @@ public class Truck extends Car {
     public String toString() {
         return getCarType() + ": " +  super.toString();
     }
+
+    @Override
+    public int compareTo(Car o) {
+        return super.getId().compareTo(o.getId());
+    }
 }

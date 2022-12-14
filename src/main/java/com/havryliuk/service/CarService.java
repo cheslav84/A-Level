@@ -17,6 +17,9 @@ public class CarService {
         this.carArrayRepository = carArrayRepository;
     }
 
+
+
+
     public Car create(CarType carType) {
         Manufacturer manufacturer = getRandomManufacturer();
         Engine engine = getRandomEngine();
@@ -78,6 +81,7 @@ public class CarService {
         final Car[] all = carArrayRepository.getAll();
         System.out.println(Arrays.toString(all));
     }
+
 
     public Car[] getAll() {
         return carArrayRepository.getAll();

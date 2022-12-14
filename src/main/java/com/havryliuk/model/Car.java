@@ -4,8 +4,8 @@ import com.havryliuk.service.CountRestore;
 
 import java.util.Random;
 import java.util.UUID;
-public abstract class Car implements CountRestore {
-    private final String id;
+public abstract class Car implements CountRestore, Comparable<Car> {
+    private String id;
     private Manufacturer manufacturer;
     private Engine engine;
     private Color color;
@@ -23,6 +23,7 @@ public abstract class Car implements CountRestore {
         this.id = UUID.randomUUID().toString();
         this.carType = carType;
     }
+
 
     public Manufacturer getManufacturer() {
         return manufacturer;
@@ -42,6 +43,10 @@ public abstract class Car implements CountRestore {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Color getColor() {
@@ -108,4 +113,6 @@ public abstract class Car implements CountRestore {
                 + "; " + getColor()
                 + "; Count: " + count;
     }
+
+
 }
