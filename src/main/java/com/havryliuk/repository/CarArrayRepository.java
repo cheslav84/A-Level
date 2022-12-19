@@ -3,9 +3,11 @@ package com.havryliuk.repository;
 import com.havryliuk.model.Car;
 import com.havryliuk.model.Color;
 
-public class CarArrayRepository { // can be named DAO in same case
+public class CarArrayRepository implements CarRepository<Car, Color> {
     private static Car[] cars = new Car[10];
 
+
+    @Override
     public void save(final Car car) {
         final int index = putCar(car);
         if (index == cars.length) {
@@ -15,6 +17,7 @@ public class CarArrayRepository { // can be named DAO in same case
         }
     }
 
+    @Override
     public Car[] getAll() {
         final int newLength = foundLength();
         final Car[] newCars = new Car[newLength];
@@ -22,6 +25,7 @@ public class CarArrayRepository { // can be named DAO in same case
         return newCars;
     }
 
+    @Override
     public Car getById(final String id) {
         for (Car car : cars) {
             if (car.getId().equals(id)) {
@@ -31,6 +35,7 @@ public class CarArrayRepository { // can be named DAO in same case
         return null;
     }
 
+    @Override
     public void delete(final String id) {
         int index = 0;
         for (; index < cars.length; index++) {
@@ -44,14 +49,16 @@ public class CarArrayRepository { // can be named DAO in same case
         }
     }
 
+    @Override
     public void insert(int index, final Car car) {
-        // TODO: 09/11/22
+
         // Example: insert(7, Car car);
         // If 7 is not empty -> need to transfer existed values and put new value to 7 index
         // If 7 is empty -> need to check bounds
         // if we have empty cell before index -> use first empty cell insted of
     }
 
+    @Override
     public void updateColor(final String id, final Color color) {
         final Car car = getById(id);
         if (car != null) {
