@@ -111,7 +111,16 @@ public abstract class Car implements CountRestore, Comparable<Car> {
         return getManufacturer()
                 + "; " + getEngine()
                 + "; " + getColor()
+                + "; Price: " + price
                 + "; Count: " + count;
+
+
+//        return "id: " + id
+//                + "; " + getManufacturer()
+//                + "; " + getEngine()
+//                + "; " + getColor()
+//                + "; Price: " + price
+//                + "; Count: " + count;
     }
 
 

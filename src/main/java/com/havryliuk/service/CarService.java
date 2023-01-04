@@ -5,10 +5,10 @@ import com.havryliuk.model.*;
 import com.havryliuk.repository.CarArrayRepository;
 import com.havryliuk.util.RandomGenerator;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -16,9 +16,94 @@ public class CarService {
 
     private final CarArrayRepository carArrayRepository;
 
-
     public CarService(final CarArrayRepository carArrayRepository) {
         this.carArrayRepository = carArrayRepository;
+    }
+
+
+
+    public Map<Color, Integer> innerList (List<CarList<Car>> cars, int price) {
+       return cars.stream()
+                .flatMap(Collection::stream)
+                .sorted(Comparator.comparing(Car::getColor))
+                .peek(System.out::println)
+                .filter(p -> p.getPrice() > price)
+                .collect(Collectors.groupingBy(Car::getColor,
+                        Collectors.summingInt(Car::getCount))
+                );
+    }
+
+    public Function<Map<String, Object>, Car> mapToObject = map -> {
+        CarType carType = (CarType) map.get("CarType");
+        Car car;
+        if (carType.equals(CarType.CAR)) {
+            car = getPassengerCar(map);
+        } else {
+            car = getTruck(map);
+        }
+        car.setManufacturer((Manufacturer) map.get("Manufacturer"));
+        car.setEngine((Engine) map.get("Engine"));
+        car.setColor((Color) map.get("Color"));
+        car.setPrice((int) map.get("Price"));
+        car.setCount((int) map.get("Count"));
+        return car;
+    };
+
+    private PassengerCar getPassengerCar(Map<String, Object> map) {
+        PassengerCar car = (PassengerCar) this.create(CarType.CAR);
+        car.setPassengerCount((int) map.get("Passengers/Load"));
+        return car;
+    }
+
+
+    private Truck getTruck(Map<String, Object> map) {
+        Truck car = (Truck) this.create(CarType.CAR);
+        car.setLoadCapacity((int) map.get("Passengers/Load"));
+        return car;
+    }
+
+
+
+    public boolean priceCheck (CarList<Car> cars, int price) {
+      Predicate<Car> priceCheck = c -> c.getPrice() > price;
+      return cars.stream()
+              .allMatch(priceCheck);
+    }
+
+
+
+    public void statistic (CarList<Car> cars) {
+        DoubleSummaryStatistics stat = cars.stream()
+                .map(Car::getPrice)
+                .collect(DoubleSummaryStatistics::new,
+                        DoubleSummaryStatistics::accept,
+                        DoubleSummaryStatistics::combine);
+        System.out.println(stat);
+    }
+
+    public Map<String, CarType> getCarTypesById (CarList<Car> cars) {
+        return cars.stream()
+                .sorted(Comparator.comparing(Car::getManufacturer)
+                ).distinct()
+                .collect(Collectors.toMap(
+                        Car::getId,
+                        Car::getCarType,
+                        (c1, c2) -> c1,
+                        LinkedHashMap::new));
+}
+
+
+    public void findManufacturerByPrice (CarList<Car> cars, int price) {
+        cars.stream()
+                .filter(car -> car.getPrice() > price)
+                .map(Car::getManufacturer)
+                .forEach(System.out::println);
+    }
+
+    public int countPriceSum(CarList<Car> cars) {
+        return cars.stream()
+                .map(Car::getPrice)
+                .reduce(0, Integer::sum);
     }
 
 
@@ -33,15 +118,8 @@ public class CarService {
     public Map<Integer, List<Car>> getCarsByEnginePower (CarList<Car> cars) {
         return cars.stream()
                 .collect(Collectors.groupingBy(car -> car.getEngine().getPower()));
-//                .collect(Collectors.groupingBy(Car::getEngine))
-
-//                        Collectors.summingInt(Car::getCount)));
     }
-//    public Map<Integer, Integer> getCarCountsByEnginePower (CarList<Car> cars) {
-//        return cars.stream()
-//                .collect(Collectors.groupingBy(car -> car.getEngine().getPower(),
-//                        Collectors.summingInt(Car::getCount)));
-//    }
+
 
     public Car create(CarType carType) {
         Manufacturer manufacturer = getRandomManufacturer();
@@ -73,6 +151,19 @@ public class CarService {
     public void print(Car car) {
         System.out.println(car);
     }
+
+
+    public Car getCopy(Car car) {
+        Car copy = this.create(car.getCarType());
+        copy.setEngine(car.getEngine());
+        copy.setManufacturer(car.getManufacturer());
+        copy.setCount(car.getCount());
+        copy.setPrice(car.getPrice());
+        copy.setColor(car.getColor());
+        copy.setId(car.getId());
+        return copy;
+    }
+
 
 
     private Engine getRandomEngine() {

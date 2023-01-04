@@ -3,6 +3,7 @@ package com.havryliuk.container;
 import com.havryliuk.model.Car;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class CarList<E extends Car> extends AbstractList<E> {
     private Node<E> firstNode;
@@ -190,6 +191,13 @@ public class CarList<E extends Car> extends AbstractList<E> {
                 return data;
             }
         };
+    }
+
+
+
+    public void print() {
+         this.stream()
+                .forEach(System.out::println);
     }
 
     private class Node<E> {
