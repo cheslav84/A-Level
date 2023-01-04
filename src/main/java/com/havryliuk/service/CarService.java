@@ -1,11 +1,15 @@
 package com.havryliuk.service;
 
+import com.havryliuk.container.CarList;
 import com.havryliuk.model.*;
 import com.havryliuk.repository.CarArrayRepository;
 import com.havryliuk.util.RandomGenerator;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 
 public class CarService {
@@ -18,7 +22,26 @@ public class CarService {
     }
 
 
+    public Map<Manufacturer, Integer> getCarCountsByManufacturer (CarList<Car> cars) {
+        return cars.stream()
+                .collect(Collectors.groupingBy(Car::getManufacturer,
+                Collectors.summingInt(Car::getCount)));
+    }
 
+
+
+    public Map<Integer, List<Car>> getCarsByEnginePower (CarList<Car> cars) {
+        return cars.stream()
+                .collect(Collectors.groupingBy(car -> car.getEngine().getPower()));
+//                .collect(Collectors.groupingBy(Car::getEngine))
+
+//                        Collectors.summingInt(Car::getCount)));
+    }
+//    public Map<Integer, Integer> getCarCountsByEnginePower (CarList<Car> cars) {
+//        return cars.stream()
+//                .collect(Collectors.groupingBy(car -> car.getEngine().getPower(),
+//                        Collectors.summingInt(Car::getCount)));
+//    }
 
     public Car create(CarType carType) {
         Manufacturer manufacturer = getRandomManufacturer();
