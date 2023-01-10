@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  XML schema -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://com.havryliuk"
+           xmlns:tns="http://com.havryliuk">
+
+    <xs:element name="car" type="car"/>
+    <xs:complexType name="carDetails">
+        <xs:sequence>
+
+            <xs:element name="id" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="([a-zA-Zа-яА-Я0-9])+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="manufacturer">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="AUDI"/>
+                        <xs:enumeration value="BMW"/>
+                        <xs:enumeration value="CHEVROLET"/>
+                        <xs:enumeration value="FORD"/>
+                        <xs:enumeration value="HONDA"/>
+                        <xs:enumeration value="JAGUAR"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="engine">
+                <xs:complexType>
+                    <xs:sequence>
+
+                        <xs:element name="power">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:positiveInteger">
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+
+                        <xs:element name="type">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:pattern value="([a-zA-Zа-яА-Я0-9])+"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="color">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="RED"/>
+                        <xs:enumeration value="GREEN"/>
+                        <xs:enumeration value="BLUE"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="carType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="CAR"/>
+                        <xs:enumeration value="TRUCK"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="count">
+                <xs:simpleType>
+                    <xs:restriction base="xs:positiveInteger">
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="price">
+                <xs:simpleType>
+                    <xs:restriction base="xs:positiveInteger">
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="car">
+        <xs:complexContent>
+            <xs:extension base="carDetails">
+                <xs:sequence>
+                    <xs:choice minOccurs="1" maxOccurs="1">
+                        <xs:element ref="passengerCount" maxOccurs="1"/>
+                        <xs:element ref="loadCapacity" maxOccurs="1"/>
+
+<!--                        <xs:element name="passengerCount">-->
+<!--                            <xs:simpleType>-->
+<!--                                <xs:restriction base="xs:positiveInteger">-->
+<!--                                </xs:restriction>-->
+<!--                            </xs:simpleType>-->
+<!--                        </xs:element>-->
+
+<!--                        <xs:element name="loadCapacity">-->
+<!--                            <xs:simpleType>-->
+<!--                                <xs:restriction base="xs:positiveInteger">-->
+<!--                                </xs:restriction>-->
+<!--                            </xs:simpleType>-->
+<!--                        </xs:element>-->
+
+                    </xs:choice>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="passengerCount" >
+        <xs:simpleType>
+            <xs:restriction base="xs:positiveInteger">
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="loadCapacity">
+        <xs:simpleType>
+            <xs:restriction base="xs:positiveInteger">
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+
+
+</xs:schema>

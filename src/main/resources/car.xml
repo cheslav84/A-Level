@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tn:car xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://com.havryliuk.car.xsd"
+		xmlns:tn="http://com.havryliuk">
+
+		<id>id4</id>
+		<manufacturer>AUDI</manufacturer>
+		<engine>
+			<power>250</power>
+			<type>Petrol</type>
+		</engine>
+		<color>RED</color>
+		<carType>CAR</carType>
+		<count>1</count>
+		<price>20000</price>
+		<passengerCount>5</passengerCount>
+</tn:car>

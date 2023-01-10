@@ -1,0 +1,17 @@
+{
+  "car": [
+    {
+      "id": "id5",
+      "manufacturer": "HONDA",
+      "engine": {
+		  "power": "200",
+		  "type": "Diesel"
+      },
+      "color": "BLUE",
+      "carType": "CAR",
+      "count": "1",
+      "price": "25000",
+      "passengerCount": "5"
+    }
+  ]
+}
